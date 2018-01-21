@@ -9,6 +9,16 @@ require 'rspec/rails'
 require 'database_cleaner'
 # Add additional requires below this line. Rails is not loaded until this point!
 
+# spec/rails_helper.rb
+# [...]
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
+# [...]
+RSpec.configuration do |config|
+  # [...]
+  config.include RequestSpecHelper, type: :request
+  # [...]
+end
+
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -28,11 +38,6 @@ require 'database_cleaner'
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
 
-# spec/rails_helper.rb
-# [...]
-Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
-# [...]
-
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -41,8 +46,6 @@ RSpec.configure do |config|
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
-
-  config.include RequestSpecHelper, type: :request
 
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
